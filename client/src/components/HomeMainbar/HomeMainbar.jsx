@@ -1,48 +1,84 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { button, useLocation, useNavigate } from 'react-router-dom'
 import './HomeMainbar.css'
-import './questionList'
+import QuestionList from './QuestionList'
 
 const HomeMainbar = () => {
 
     var questionList = [{
         id:1,
-        votes: 3,
+        upVotes: 3,
+        downVotes: 2,
         noOfAnswers: 2,
         questionTitle: "What is a function?",
         questionBody: "It meant to be",
         questionTags: ["java","node.js","react.js","mongodb"],
         userPosted: "mano",
-        askedOn: "jan 1"
+        userId: 1,
+        askedOn: "jan 1",
+        answer: [{
+            answerBody: "Answer",
+            userAnswered: 'kumar',
+            answeredOn: "jan 2",
+            userId: 2,
+        }]
     },{
         id:2,
-        votes: 0,
+        upVotes: 3,
+        downVotes: 2,
         noOfAnswers: 0,
         questionTitle: "What is a function?",
         questionBody: "It meant to be",
         questionTags: ["javascript","R","python"],
         userPosted: "mano",
-        askedOn: "jan 1"
+        userId: 1,
+        askedOn: "jan 1",
+        answer: [{
+            answerBody: "Answer",
+            userAnswered: 'kumar',
+            answeredOn: "jan 2",
+            userId: 2,
+        }]
     },{
         id:3,
-        votes: 1,
+        upVotes: 3,
+        downVotes: 2,
         noOfAnswers: 0,
         questionTitle: "What is a function?",
         questionBody: "It meant to be",
         questionTags: ["javascript","R","python"],
         userPosted: "mano",
-        askedOn: "jan 1"
+        userId: 1,
+        askedOn: "jan 1",
+        answer: [{
+            answerBody: "Answer",
+            userAnswered: 'kumar',
+            answeredOn: "jan 2",
+            userId: 2,
+        }]
     }]
 
     const location = useLocation()
+    const user = null;
+    const navigate = useNavigate()
 
+    const checkAuth = () => {
+        if(user === null) {
+            alert("login or signup to ask a question")
+            navigate('/Auth')
+        }
+        else
+        {
+            navigate('/AskQuestion')
+        }
+    }
     return (
         <div className='main-bar'>
             <div className='main-bar-header'>
                 {
                     location.pathname === '/' ? <h1>Top Question</h1> : <h1>All Questions</h1>
                 }
-                <Link to='/AskQuestion' className='ask-btn'>Ask Question</Link>
+                <button onClick={checkAuth} className='ask-btn'>Ask Question</button>
             </div>
             <div>
                 {
@@ -50,7 +86,7 @@ const HomeMainbar = () => {
                     <h1>Loading...</h1> :
                     <>
                         <p>{ questionList.length } questions</p>
-                        
+                        <QuestionList questionList={questionList} />
                     </>
                 }
             </div>
